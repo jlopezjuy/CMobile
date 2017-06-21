@@ -1,0 +1,10 @@
+version: '2'
+services:
+    cadmobile-app:
+        image: cadmobile
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod,swagger
+            - SPRING_DATASOURCE_URL=jdbc:oracle:thin:@cadmobile-oracle:1521:cadmobile
+            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
+        ports:
+            - 8080:8080
