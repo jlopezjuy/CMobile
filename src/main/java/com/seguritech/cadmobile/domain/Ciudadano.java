@@ -81,7 +81,7 @@ public class Ciudadano implements Serializable {
     @Column(name = "longitud", precision=10, scale=2)
     private BigDecimal longitud;
 
-    @Column(name = "codigo_verfificacion")
+    @Column(name = "codigo_verificacion")
     private String codigoVerificacion;
 
     @Column(name = "estado")
