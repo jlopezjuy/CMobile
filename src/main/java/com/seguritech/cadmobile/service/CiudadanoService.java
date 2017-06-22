@@ -39,4 +39,12 @@ public interface CiudadanoService {
      *  @param id the id of the entity
      */
     void delete(Long id);
+
+    /**
+     *
+     * @param telefonoMovil
+     * @param codigoVerfificacion
+     * @return
+     */
+    CiudadanoDTO verificarReg(String telefonoMovil, String codigoVerfificacion);
 }

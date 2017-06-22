@@ -83,4 +83,10 @@ public class CiudadanoServiceImpl implements CiudadanoService{
         log.debug("Request to delete Ciudadano : {}", id);
         ciudadanoRepository.delete(id);
     }
+
+    @Override
+    public CiudadanoDTO verificarReg(String telefonoMovil, String codigoVerificacion) {
+        Ciudadano ciudadano = ciudadanoRepository.findByTelefonoMovilAndCodigoVerificacion(telefonoMovil, codigoVerificacion);
+        return ciudadanoMapper.toDto(ciudadano);
+    }
 }

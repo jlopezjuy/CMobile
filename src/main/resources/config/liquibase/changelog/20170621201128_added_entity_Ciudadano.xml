@@ -93,7 +93,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="codigo_verfificacion" type="varchar(255)">
+            <column name="codigo_verificacion" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
 
@@ -103,6 +103,6 @@
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        
+
     </changeSet>
 </databaseChangeLog>

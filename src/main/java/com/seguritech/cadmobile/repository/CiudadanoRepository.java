@@ -12,5 +12,6 @@ import org.springframework.data.jpa.repository.*;
 @SuppressWarnings("unused")
 @Repository
 public interface CiudadanoRepository extends JpaRepository<Ciudadano,Long> {
-    
+
+    Ciudadano findByTelefonoMovilAndCodigoVerificacion(String telefonoMovil, String codigoVerificacion);
 }

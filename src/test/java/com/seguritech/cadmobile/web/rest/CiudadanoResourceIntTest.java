@@ -164,7 +164,7 @@ public class CiudadanoResourceIntTest {
             .padecimientos(DEFAULT_PADECIMIENTOS)
             .latitud(DEFAULT_LATITUD)
             .longitud(DEFAULT_LONGITUD)
-            .codigoVerfificacion(DEFAULT_CODIGO_VERFIFICACION)
+            .codigoVerificacion(DEFAULT_CODIGO_VERFIFICACION)
             .estado(DEFAULT_ESTADO);
         return ciudadano;
     }
@@ -208,7 +208,7 @@ public class CiudadanoResourceIntTest {
         assertThat(testCiudadano.getPadecimientos()).isEqualTo(DEFAULT_PADECIMIENTOS);
         assertThat(testCiudadano.getLatitud()).isEqualTo(DEFAULT_LATITUD);
         assertThat(testCiudadano.getLongitud()).isEqualTo(DEFAULT_LONGITUD);
-        assertThat(testCiudadano.getCodigoVerfificacion()).isEqualTo(DEFAULT_CODIGO_VERFIFICACION);
+        assertThat(testCiudadano.getCodigoVerificacion()).isEqualTo(DEFAULT_CODIGO_VERFIFICACION);
         assertThat(testCiudadano.isEstado()).isEqualTo(DEFAULT_ESTADO);
     }
 
@@ -334,7 +334,7 @@ public class CiudadanoResourceIntTest {
             .padecimientos(UPDATED_PADECIMIENTOS)
             .latitud(UPDATED_LATITUD)
             .longitud(UPDATED_LONGITUD)
-            .codigoVerfificacion(UPDATED_CODIGO_VERFIFICACION)
+            .codigoVerificacion(UPDATED_CODIGO_VERFIFICACION)
             .estado(UPDATED_ESTADO);
         CiudadanoDTO ciudadanoDTO = ciudadanoMapper.toDto(updatedCiudadano);
 
@@ -365,7 +365,7 @@ public class CiudadanoResourceIntTest {
         assertThat(testCiudadano.getPadecimientos()).isEqualTo(UPDATED_PADECIMIENTOS);
         assertThat(testCiudadano.getLatitud()).isEqualTo(UPDATED_LATITUD);
         assertThat(testCiudadano.getLongitud()).isEqualTo(UPDATED_LONGITUD);
-        assertThat(testCiudadano.getCodigoVerfificacion()).isEqualTo(UPDATED_CODIGO_VERFIFICACION);
+        assertThat(testCiudadano.getCodigoVerificacion()).isEqualTo(UPDATED_CODIGO_VERFIFICACION);
         assertThat(testCiudadano.isEstado()).isEqualTo(UPDATED_ESTADO);
     }
 

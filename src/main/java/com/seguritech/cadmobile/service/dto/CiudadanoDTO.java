@@ -51,7 +51,7 @@ public class CiudadanoDTO implements Serializable {
 
     private BigDecimal longitud;
 
-    private String codigoVerfificacion;
+    private String codigoVerificacion;
 
     private Boolean estado;
 
@@ -207,12 +207,12 @@ public class CiudadanoDTO implements Serializable {
         this.longitud = longitud;
     }
 
-    public String getCodigoVerfificacion() {
-        return codigoVerfificacion;
+    public String getCodigoVerificacion() {
+        return codigoVerificacion;
     }
 
-    public void setCodigoVerfificacion(String codigoVerfificacion) {
-        this.codigoVerfificacion = codigoVerfificacion;
+    public void setCodigoVerificacion(String codigoVerificacion) {
+        this.codigoVerificacion = codigoVerificacion;
     }
 
     public Boolean isEstado() {
@@ -266,7 +266,7 @@ public class CiudadanoDTO implements Serializable {
             ", padecimientos='" + getPadecimientos() + "'" +
             ", latitud='" + getLatitud() + "'" +
             ", longitud='" + getLongitud() + "'" +
-            ", codigoVerfificacion='" + getCodigoVerfificacion() + "'" +
+            ", codigoVerfificacion='" + getCodigoVerificacion() + "'" +
             ", estado='" + isEstado() + "'" +
             "}";
     }

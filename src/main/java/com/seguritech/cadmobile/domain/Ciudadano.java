@@ -82,7 +82,7 @@ public class Ciudadano implements Serializable {
     private BigDecimal longitud;
 
     @Column(name = "codigo_verfificacion")
-    private String codigoVerfificacion;
+    private String codigoVerificacion;
 
     @Column(name = "estado")
     private Boolean estado;
@@ -339,17 +339,17 @@ public class Ciudadano implements Serializable {
         this.longitud = longitud;
     }
 
-    public String getCodigoVerfificacion() {
-        return codigoVerfificacion;
+    public String getCodigoVerificacion() {
+        return codigoVerificacion;
     }
 
-    public Ciudadano codigoVerfificacion(String codigoVerfificacion) {
-        this.codigoVerfificacion = codigoVerfificacion;
+    public Ciudadano codigoVerificacion(String codigoVerificacion) {
+        this.codigoVerificacion = codigoVerificacion;
         return this;
     }
 
-    public void setCodigoVerfificacion(String codigoVerfificacion) {
-        this.codigoVerfificacion = codigoVerfificacion;
+    public void setCodigoVerificacion(String codigoVerificacion) {
+        this.codigoVerificacion = codigoVerificacion;
     }
 
     public Boolean isEstado() {
@@ -457,7 +457,7 @@ public class Ciudadano implements Serializable {
             ", padecimientos='" + getPadecimientos() + "'" +
             ", latitud='" + getLatitud() + "'" +
             ", longitud='" + getLongitud() + "'" +
-            ", codigoVerfificacion='" + getCodigoVerfificacion() + "'" +
+            ", codigoVerificacion='" + getCodigoVerificacion() + "'" +
             ", estado='" + isEstado() + "'" +
             "}";
     }

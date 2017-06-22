@@ -1,17 +1,17 @@
-package com.seguritech.cadmobile.domain;
+package com.seguritech.cadmobile.service.dto;
 
 /**
  * @author jlopez
  */
-public class CiudadanoRegistro {
+public class CiudadanoRegistroDTO {
     private Long codigo;
     private String mensaje;
     private Long idCiudadano;
 
-    public CiudadanoRegistro() {
+    public CiudadanoRegistroDTO() {
     }
 
-    public CiudadanoRegistro(Long codigo, String mensaje, Long idCiudadano) {
+    public CiudadanoRegistroDTO(Long codigo, String mensaje, Long idCiudadano) {
         this.codigo = codigo;
         this.mensaje = mensaje;
         this.idCiudadano = idCiudadano;

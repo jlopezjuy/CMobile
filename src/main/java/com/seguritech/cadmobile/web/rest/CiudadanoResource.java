@@ -1,8 +1,10 @@
 package com.seguritech.cadmobile.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
-import com.seguritech.cadmobile.domain.CiudadanoRegistro;
+import com.seguritech.cadmobile.service.dto.CiudadanoRegistroDTO;
 import com.seguritech.cadmobile.service.CiudadanoService;
+import com.seguritech.cadmobile.service.dto.VerificacionDTO;
+import com.seguritech.cadmobile.util.Constant;
 import com.seguritech.cadmobile.web.rest.util.HeaderUtil;
 import com.seguritech.cadmobile.web.rest.util.PaginationUtil;
 import com.seguritech.cadmobile.service.dto.CiudadanoDTO;
@@ -40,6 +42,21 @@ public class CiudadanoResource {
         this.ciudadanoService = ciudadanoService;
     }
 
+    /**
+     * GET  /dispositivo/movil/ciudadano/verificar : get verification status of a ciudadano.
+     *
+     * @param telefonoMovil
+     * @param codigoVerfificacion
+     * @return Verification status of a Ciudadano with status 200 (ok) and status.
+     */
+    @GetMapping("/dispositivo/movil/ciudadano/verificar")
+    @Timed
+    public ResponseEntity<VerificacionDTO> verificarRegistro(@RequestParam String telefonoMovil, @RequestParam String codigoVerfificacion) {
+        log.debug("REST request to get a page of Ciudadanos");
+        CiudadanoDTO page = ciudadanoService.verificarReg(telefonoMovil, codigoVerfificacion);
+        VerificacionDTO verificacion = new VerificacionDTO(Constant.CODIGO_0, Constant.CODIGO_0_MESSAGE);
+        return new ResponseEntity<VerificacionDTO>(verificacion, HttpStatus.OK);
+    }
 
     /**
      * POST  /ciudadanos : Create a new ciudadano.
@@ -50,98 +67,18 @@ public class CiudadanoResource {
      */
     @PostMapping("/dispositivo/movil/ciudadano/registrar")
     @Timed
-    public ResponseEntity<CiudadanoRegistro> registroCiudadano(@RequestBody CiudadanoDTO ciudadanoDTO) throws URISyntaxException {
+    public ResponseEntity<CiudadanoRegistroDTO> registroCiudadano(@RequestBody CiudadanoDTO ciudadanoDTO) throws URISyntaxException {
         log.debug("REST request to save Ciudadano : {}", ciudadanoDTO);
-        if (ciudadanoDTO.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new ciudadano cannot already have an ID")).body(null);
+        try{
+            if (ciudadanoDTO.getId() != null) {
+                return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new ciudadano cannot already have an ID")).body(null);
+            }
+            CiudadanoDTO result = ciudadanoService.save(ciudadanoDTO);
+            CiudadanoRegistroDTO ciudadano = new CiudadanoRegistroDTO(Long.valueOf(0),"Se registro correctamente el ciudadano", result.getId());
+            return new ResponseEntity<CiudadanoRegistroDTO>(ciudadano, HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity<CiudadanoRegistroDTO>(new CiudadanoRegistroDTO(), HttpStatus.BAD_REQUEST);
         }
-        CiudadanoDTO result = ciudadanoService.save(ciudadanoDTO);
-        CiudadanoRegistro ciudadano = new CiudadanoRegistro(Long.valueOf(0),"Se registro correctamente el ciudadano", result.getId());
-        return new ResponseEntity<CiudadanoRegistro>(ciudadano, HttpStatus.OK);
-    }
 
-    /**
-     * POST  /ciudadanos : Create a new ciudadano.
-     *
-     * @param ciudadanoDTO the ciudadanoDTO to create
-     * @return the ResponseEntity with status 201 (Created) and with body the new ciudadanoDTO, or with status 400 (Bad Request) if the ciudadano has already an ID
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
-    @PostMapping("/ciudadanos")
-    @Timed
-    public ResponseEntity<CiudadanoDTO> createCiudadano(@RequestBody CiudadanoDTO ciudadanoDTO) throws URISyntaxException {
-        log.debug("REST request to save Ciudadano : {}", ciudadanoDTO);
-        if (ciudadanoDTO.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new ciudadano cannot already have an ID")).body(null);
-        }
-        CiudadanoDTO result = ciudadanoService.save(ciudadanoDTO);
-        return ResponseEntity.created(new URI("/rest/ciudadanos/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
-            .body(result);
-    }
-
-    /**
-     * PUT  /ciudadanos : Updates an existing ciudadano.
-     *
-     * @param ciudadanoDTO the ciudadanoDTO to update
-     * @return the ResponseEntity with status 200 (OK) and with body the updated ciudadanoDTO,
-     * or with status 400 (Bad Request) if the ciudadanoDTO is not valid,
-     * or with status 500 (Internal Server Error) if the ciudadanoDTO couldn't be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
-    @PutMapping("/ciudadanos")
-    @Timed
-    public ResponseEntity<CiudadanoDTO> updateCiudadano(@RequestBody CiudadanoDTO ciudadanoDTO) throws URISyntaxException {
-        log.debug("REST request to update Ciudadano : {}", ciudadanoDTO);
-        if (ciudadanoDTO.getId() == null) {
-            return createCiudadano(ciudadanoDTO);
-        }
-        CiudadanoDTO result = ciudadanoService.save(ciudadanoDTO);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, ciudadanoDTO.getId().toString()))
-            .body(result);
-    }
-
-    /**
-     * GET  /ciudadanos : get all the ciudadanos.
-     *
-     * @param pageable the pagination information
-     * @return the ResponseEntity with status 200 (OK) and the list of ciudadanos in body
-     */
-    @GetMapping("/ciudadanos")
-    @Timed
-    public ResponseEntity<List<CiudadanoDTO>> getAllCiudadanos(@ApiParam Pageable pageable) {
-        log.debug("REST request to get a page of Ciudadanos");
-        Page<CiudadanoDTO> page = ciudadanoService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/rest/ciudadanos");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
-    }
-
-    /**
-     * GET  /ciudadanos/:id : get the "id" ciudadano.
-     *
-     * @param id the id of the ciudadanoDTO to retrieve
-     * @return the ResponseEntity with status 200 (OK) and with body the ciudadanoDTO, or with status 404 (Not Found)
-     */
-    @GetMapping("/ciudadanos/{id}")
-    @Timed
-    public ResponseEntity<CiudadanoDTO> getCiudadano(@PathVariable Long id) {
-        log.debug("REST request to get Ciudadano : {}", id);
-        CiudadanoDTO ciudadanoDTO = ciudadanoService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(ciudadanoDTO));
-    }
-
-    /**
-     * DELETE  /ciudadanos/:id : delete the "id" ciudadano.
-     *
-     * @param id the id of the ciudadanoDTO to delete
-     * @return the ResponseEntity with status 200 (OK)
-     */
-    @DeleteMapping("/ciudadanos/{id}")
-    @Timed
-    public ResponseEntity<Void> deleteCiudadano(@PathVariable Long id) {
-        log.debug("REST request to delete Ciudadano : {}", id);
-        ciudadanoService.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 }
