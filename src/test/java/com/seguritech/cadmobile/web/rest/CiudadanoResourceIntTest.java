@@ -181,7 +181,7 @@ public class CiudadanoResourceIntTest {
 
         // Create the Ciudadano
         CiudadanoDTO ciudadanoDTO = ciudadanoMapper.toDto(ciudadano);
-        restCiudadanoMockMvc.perform(post("/api/ciudadanos")
+        restCiudadanoMockMvc.perform(post("/rest/ciudadanos")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(ciudadanoDTO)))
             .andExpect(status().isCreated());
@@ -222,7 +222,7 @@ public class CiudadanoResourceIntTest {
         CiudadanoDTO ciudadanoDTO = ciudadanoMapper.toDto(ciudadano);
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        restCiudadanoMockMvc.perform(post("/api/ciudadanos")
+        restCiudadanoMockMvc.perform(post("/rest/ciudadanos")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(ciudadanoDTO)))
             .andExpect(status().isBadRequest());
@@ -239,7 +239,7 @@ public class CiudadanoResourceIntTest {
         ciudadanoRepository.saveAndFlush(ciudadano);
 
         // Get all the ciudadanoList
-        restCiudadanoMockMvc.perform(get("/api/ciudadanos?sort=id,desc"))
+        restCiudadanoMockMvc.perform(get("/rest/ciudadanos?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(ciudadano.getId().intValue())))
@@ -272,7 +272,7 @@ public class CiudadanoResourceIntTest {
         ciudadanoRepository.saveAndFlush(ciudadano);
 
         // Get the ciudadano
-        restCiudadanoMockMvc.perform(get("/api/ciudadanos/{id}", ciudadano.getId()))
+        restCiudadanoMockMvc.perform(get("/rest/ciudadanos/{id}", ciudadano.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(ciudadano.getId().intValue()))
@@ -302,7 +302,7 @@ public class CiudadanoResourceIntTest {
     @Transactional
     public void getNonExistingCiudadano() throws Exception {
         // Get the ciudadano
-        restCiudadanoMockMvc.perform(get("/api/ciudadanos/{id}", Long.MAX_VALUE))
+        restCiudadanoMockMvc.perform(get("/rest/ciudadanos/{id}", Long.MAX_VALUE))
             .andExpect(status().isNotFound());
     }
 
@@ -338,7 +338,7 @@ public class CiudadanoResourceIntTest {
             .estado(UPDATED_ESTADO);
         CiudadanoDTO ciudadanoDTO = ciudadanoMapper.toDto(updatedCiudadano);
 
-        restCiudadanoMockMvc.perform(put("/api/ciudadanos")
+        restCiudadanoMockMvc.perform(put("/rest/ciudadanos")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(ciudadanoDTO)))
             .andExpect(status().isOk());
@@ -378,7 +378,7 @@ public class CiudadanoResourceIntTest {
         CiudadanoDTO ciudadanoDTO = ciudadanoMapper.toDto(ciudadano);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
-        restCiudadanoMockMvc.perform(put("/api/ciudadanos")
+        restCiudadanoMockMvc.perform(put("/rest/ciudadanos")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(ciudadanoDTO)))
             .andExpect(status().isCreated());
@@ -396,7 +396,7 @@ public class CiudadanoResourceIntTest {
         int databaseSizeBeforeDelete = ciudadanoRepository.findAll().size();
 
         // Get the ciudadano
-        restCiudadanoMockMvc.perform(delete("/api/ciudadanos/{id}", ciudadano.getId())
+        restCiudadanoMockMvc.perform(delete("/rest/ciudadanos/{id}", ciudadano.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 

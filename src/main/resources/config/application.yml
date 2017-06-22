@@ -105,7 +105,7 @@ jhipster:
     mail:
         from: cadgateway@localhost
     swagger:
-        default-include-pattern: /api/.*
+        default-include-pattern: /rest/.*
         title: cadgateway API
         description: cadgateway API documentation
         version: 0.0.1

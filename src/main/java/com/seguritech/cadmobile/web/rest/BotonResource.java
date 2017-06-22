@@ -20,7 +20,7 @@ import java.util.Optional;
  * REST controller for managing Boton.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/rest")
 public class BotonResource {
 
     private final Logger log = LoggerFactory.getLogger(BotonResource.class);
@@ -48,7 +48,7 @@ public class BotonResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new boton cannot already have an ID")).body(null);
         }
         BotonDTO result = botonService.save(botonDTO);
-        return ResponseEntity.created(new URI("/api/botons/" + result.getId()))
+        return ResponseEntity.created(new URI("/rest/botons/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }

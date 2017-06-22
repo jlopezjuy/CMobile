@@ -20,7 +20,7 @@ import java.util.Optional;
  * REST controller for managing Emergencia.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/rest")
 public class EmergenciaResource {
 
     private final Logger log = LoggerFactory.getLogger(EmergenciaResource.class);
@@ -48,7 +48,7 @@ public class EmergenciaResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new emergencia cannot already have an ID")).body(null);
         }
         EmergenciaDTO result = emergenciaService.save(emergenciaDTO);
-        return ResponseEntity.created(new URI("/api/emergencias/" + result.getId()))
+        return ResponseEntity.created(new URI("/rest/emergencias/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }

@@ -1,6 +1,7 @@
 package com.seguritech.cadmobile.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.seguritech.cadmobile.domain.CiudadanoRegistro;
 import com.seguritech.cadmobile.service.CiudadanoService;
 import com.seguritech.cadmobile.web.rest.util.HeaderUtil;
 import com.seguritech.cadmobile.web.rest.util.PaginationUtil;
@@ -26,7 +27,7 @@ import java.util.Optional;
  * REST controller for managing Ciudadano.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/rest")
 public class CiudadanoResource {
 
     private final Logger log = LoggerFactory.getLogger(CiudadanoResource.class);
@@ -37,6 +38,26 @@ public class CiudadanoResource {
 
     public CiudadanoResource(CiudadanoService ciudadanoService) {
         this.ciudadanoService = ciudadanoService;
+    }
+
+
+    /**
+     * POST  /ciudadanos : Create a new ciudadano.
+     *
+     * @param ciudadanoDTO the ciudadanoDTO to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new ciudadanoDTO, or with status 400 (Bad Request) if the ciudadano has already an ID
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PostMapping("/dispositivo/movil/ciudadano/registrar")
+    @Timed
+    public ResponseEntity<CiudadanoRegistro> registroCiudadano(@RequestBody CiudadanoDTO ciudadanoDTO) throws URISyntaxException {
+        log.debug("REST request to save Ciudadano : {}", ciudadanoDTO);
+        if (ciudadanoDTO.getId() != null) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new ciudadano cannot already have an ID")).body(null);
+        }
+        CiudadanoDTO result = ciudadanoService.save(ciudadanoDTO);
+        CiudadanoRegistro ciudadano = new CiudadanoRegistro(Long.valueOf(0),"Se registro correctamente el ciudadano", result.getId());
+        return new ResponseEntity<CiudadanoRegistro>(ciudadano, HttpStatus.OK);
     }
 
     /**
@@ -54,7 +75,7 @@ public class CiudadanoResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new ciudadano cannot already have an ID")).body(null);
         }
         CiudadanoDTO result = ciudadanoService.save(ciudadanoDTO);
-        return ResponseEntity.created(new URI("/api/ciudadanos/" + result.getId()))
+        return ResponseEntity.created(new URI("/rest/ciudadanos/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
     }
@@ -92,7 +113,7 @@ public class CiudadanoResource {
     public ResponseEntity<List<CiudadanoDTO>> getAllCiudadanos(@ApiParam Pageable pageable) {
         log.debug("REST request to get a page of Ciudadanos");
         Page<CiudadanoDTO> page = ciudadanoService.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/ciudadanos");
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/rest/ciudadanos");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 

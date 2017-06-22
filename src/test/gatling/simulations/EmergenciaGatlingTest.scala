@@ -44,29 +44,29 @@ class EmergenciaGatlingTest extends Simulation {
 
     val scn = scenario("Test the Emergencia entity")
         .exec(http("First unauthenticated request")
-        .get("/api/account")
+        .get("/rest/account")
         .headers(headers_http)
         .check(status.is(401))).exitHereIfFailed
         .pause(10)
         .exec(http("Authentication")
-        .post("/api/authenticate")
+        .post("/rest/authenticate")
         .headers(headers_http_authentication)
         .body(StringBody("""{"username":"admin", "password":"admin"}""")).asJSON
         .check(header.get("Authorization").saveAs("access_token"))).exitHereIfFailed
         .pause(1)
         .exec(http("Authenticated request")
-        .get("/api/account")
+        .get("/rest/account")
         .headers(headers_http_authenticated)
         .check(status.is(200)))
         .pause(10)
         .repeat(2) {
             exec(http("Get all emergencias")
-            .get("/cadgateway/api/emergencias")
+            .get("/cadgateway/rest/emergencias")
             .headers(headers_http_authenticated)
             .check(status.is(200)))
             .pause(10 seconds, 20 seconds)
             .exec(http("Create new emergencia")
-            .post("/cadgateway/api/emergencias")
+            .post("/cadgateway/rest/emergencias")
             .headers(headers_http_authenticated)
             .body(StringBody("""{"id":null, "telefonoMovil":"SAMPLE_TEXT", "idCorporacion":"SAMPLE_TEXT", "idSubtipoEmergencia":"SAMPLE_TEXT", "imagen":null, "latitud":null, "longitud":null}""")).asJSON
             .check(status.is(201))

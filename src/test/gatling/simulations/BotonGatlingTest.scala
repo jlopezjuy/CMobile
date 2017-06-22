@@ -44,29 +44,29 @@ class BotonGatlingTest extends Simulation {
 
     val scn = scenario("Test the Boton entity")
         .exec(http("First unauthenticated request")
-        .get("/api/account")
+        .get("/rest/account")
         .headers(headers_http)
         .check(status.is(401))).exitHereIfFailed
         .pause(10)
         .exec(http("Authentication")
-        .post("/api/authenticate")
+        .post("/rest/authenticate")
         .headers(headers_http_authentication)
         .body(StringBody("""{"username":"admin", "password":"admin"}""")).asJSON
         .check(header.get("Authorization").saveAs("access_token"))).exitHereIfFailed
         .pause(1)
         .exec(http("Authenticated request")
-        .get("/api/account")
+        .get("/rest/account")
         .headers(headers_http_authenticated)
         .check(status.is(200)))
         .pause(10)
         .repeat(2) {
             exec(http("Get all botons")
-            .get("/cadgateway/api/botons")
+            .get("/cadgateway/rest/botons")
             .headers(headers_http_authenticated)
             .check(status.is(200)))
             .pause(10 seconds, 20 seconds)
             .exec(http("Create new boton")
-            .post("/cadgateway/api/botons")
+            .post("/cadgateway/rest/botons")
             .headers(headers_http_authenticated)
             .body(StringBody("""{"id":null, "telefonoMovil":"SAMPLE_TEXT", "codigoBoton":"SAMPLE_TEXT", "latitud":null, "longitud":null}""")).asJSON
             .check(status.is(201))

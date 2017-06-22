@@ -44,29 +44,29 @@ class CiudadanoGatlingTest extends Simulation {
 
     val scn = scenario("Test the Ciudadano entity")
         .exec(http("First unauthenticated request")
-        .get("/api/account")
+        .get("/rest/account")
         .headers(headers_http)
         .check(status.is(401))).exitHereIfFailed
         .pause(10)
         .exec(http("Authentication")
-        .post("/api/authenticate")
+        .post("/rest/authenticate")
         .headers(headers_http_authentication)
         .body(StringBody("""{"username":"admin", "password":"admin"}""")).asJSON
         .check(header.get("Authorization").saveAs("access_token"))).exitHereIfFailed
         .pause(1)
         .exec(http("Authenticated request")
-        .get("/api/account")
+        .get("/rest/account")
         .headers(headers_http_authenticated)
         .check(status.is(200)))
         .pause(10)
         .repeat(2) {
             exec(http("Get all ciudadanos")
-            .get("/cadgateway/api/ciudadanos")
+            .get("/cadgateway/rest/ciudadanos")
             .headers(headers_http_authenticated)
             .check(status.is(200)))
             .pause(10 seconds, 20 seconds)
             .exec(http("Create new ciudadano")
-            .post("/cadgateway/api/ciudadanos")
+            .post("/cadgateway/rest/ciudadanos")
             .headers(headers_http_authenticated)
             .body(StringBody("""{"id":null, "nombre":"SAMPLE_TEXT", "paterno":"SAMPLE_TEXT", "materno":"SAMPLE_TEXT", "email":"SAMPLE_TEXT", "fechaNacimiento":"2020-01-01T00:00:00.000Z", "telefonoMovil":"SAMPLE_TEXT", "telefonoFijo":"SAMPLE_TEXT", "calle":"SAMPLE_TEXT", "numero":"SAMPLE_TEXT", "colonia":"SAMPLE_TEXT", "municipio":"SAMPLE_TEXT", "cp":"SAMPLE_TEXT", "genero":"SAMPLE_TEXT", "tipoSanguineo":"SAMPLE_TEXT", "alergias":"SAMPLE_TEXT", "padecimientos":"SAMPLE_TEXT", "latitud":null, "longitud":null, "codigoVerfificacion":"SAMPLE_TEXT", "estado":null}""")).asJSON
             .check(status.is(201))

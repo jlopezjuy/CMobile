@@ -115,7 +115,7 @@ public class BotonResourceIntTest {
 
         // Create the Boton
         BotonDTO botonDTO = botonMapper.toDto(boton);
-        restBotonMockMvc.perform(post("/api/botons")
+        restBotonMockMvc.perform(post("/rest/botons")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(botonDTO)))
             .andExpect(status().isCreated());
@@ -140,7 +140,7 @@ public class BotonResourceIntTest {
         BotonDTO botonDTO = botonMapper.toDto(boton);
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        restBotonMockMvc.perform(post("/api/botons")
+        restBotonMockMvc.perform(post("/rest/botons")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(botonDTO)))
             .andExpect(status().isBadRequest());
@@ -157,7 +157,7 @@ public class BotonResourceIntTest {
         botonRepository.saveAndFlush(boton);
 
         // Get all the botonList
-        restBotonMockMvc.perform(get("/api/botons?sort=id,desc"))
+        restBotonMockMvc.perform(get("/rest/botons?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(boton.getId().intValue())))
@@ -174,7 +174,7 @@ public class BotonResourceIntTest {
         botonRepository.saveAndFlush(boton);
 
         // Get the boton
-        restBotonMockMvc.perform(get("/api/botons/{id}", boton.getId()))
+        restBotonMockMvc.perform(get("/rest/botons/{id}", boton.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(boton.getId().intValue()))
@@ -188,7 +188,7 @@ public class BotonResourceIntTest {
     @Transactional
     public void getNonExistingBoton() throws Exception {
         // Get the boton
-        restBotonMockMvc.perform(get("/api/botons/{id}", Long.MAX_VALUE))
+        restBotonMockMvc.perform(get("/rest/botons/{id}", Long.MAX_VALUE))
             .andExpect(status().isNotFound());
     }
 
@@ -208,7 +208,7 @@ public class BotonResourceIntTest {
             .longitud(UPDATED_LONGITUD);
         BotonDTO botonDTO = botonMapper.toDto(updatedBoton);
 
-        restBotonMockMvc.perform(put("/api/botons")
+        restBotonMockMvc.perform(put("/rest/botons")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(botonDTO)))
             .andExpect(status().isOk());
@@ -232,7 +232,7 @@ public class BotonResourceIntTest {
         BotonDTO botonDTO = botonMapper.toDto(boton);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
-        restBotonMockMvc.perform(put("/api/botons")
+        restBotonMockMvc.perform(put("/rest/botons")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(botonDTO)))
             .andExpect(status().isCreated());
@@ -250,7 +250,7 @@ public class BotonResourceIntTest {
         int databaseSizeBeforeDelete = botonRepository.findAll().size();
 
         // Get the boton
-        restBotonMockMvc.perform(delete("/api/botons/{id}", boton.getId())
+        restBotonMockMvc.perform(delete("/rest/botons/{id}", boton.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 

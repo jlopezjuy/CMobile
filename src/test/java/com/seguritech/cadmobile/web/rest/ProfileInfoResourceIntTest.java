@@ -56,7 +56,7 @@ public class ProfileInfoResourceIntTest {
 
     @Test
     public void getProfileInfoWithRibbon() throws Exception {
-        restProfileMockMvc.perform(get("/api/profile-info"))
+        restProfileMockMvc.perform(get("/rest/profile-info"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
     }
@@ -67,7 +67,7 @@ public class ProfileInfoResourceIntTest {
         ribbon.setDisplayOnActiveProfiles(null);
         when(jHipsterProperties.getRibbon()).thenReturn(ribbon);
 
-        restProfileMockMvc.perform(get("/api/profile-info"))
+        restProfileMockMvc.perform(get("/rest/profile-info"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
     }
@@ -78,7 +78,7 @@ public class ProfileInfoResourceIntTest {
         when(environment.getDefaultProfiles()).thenReturn(emptyProfile);
         when(environment.getActiveProfiles()).thenReturn(emptyProfile);
 
-        restProfileMockMvc.perform(get("/api/profile-info"))
+        restProfileMockMvc.perform(get("/rest/profile-info"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
     }

@@ -127,7 +127,7 @@ public class EmergenciaResourceIntTest {
 
         // Create the Emergencia
         EmergenciaDTO emergenciaDTO = emergenciaMapper.toDto(emergencia);
-        restEmergenciaMockMvc.perform(post("/api/emergencias")
+        restEmergenciaMockMvc.perform(post("/rest/emergencias")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(emergenciaDTO)))
             .andExpect(status().isCreated());
@@ -155,7 +155,7 @@ public class EmergenciaResourceIntTest {
         EmergenciaDTO emergenciaDTO = emergenciaMapper.toDto(emergencia);
 
         // An entity with an existing ID cannot be created, so this API call must fail
-        restEmergenciaMockMvc.perform(post("/api/emergencias")
+        restEmergenciaMockMvc.perform(post("/rest/emergencias")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(emergenciaDTO)))
             .andExpect(status().isBadRequest());
@@ -172,7 +172,7 @@ public class EmergenciaResourceIntTest {
         emergenciaRepository.saveAndFlush(emergencia);
 
         // Get all the emergenciaList
-        restEmergenciaMockMvc.perform(get("/api/emergencias?sort=id,desc"))
+        restEmergenciaMockMvc.perform(get("/rest/emergencias?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(emergencia.getId().intValue())))
@@ -192,7 +192,7 @@ public class EmergenciaResourceIntTest {
         emergenciaRepository.saveAndFlush(emergencia);
 
         // Get the emergencia
-        restEmergenciaMockMvc.perform(get("/api/emergencias/{id}", emergencia.getId()))
+        restEmergenciaMockMvc.perform(get("/rest/emergencias/{id}", emergencia.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(emergencia.getId().intValue()))
@@ -209,7 +209,7 @@ public class EmergenciaResourceIntTest {
     @Transactional
     public void getNonExistingEmergencia() throws Exception {
         // Get the emergencia
-        restEmergenciaMockMvc.perform(get("/api/emergencias/{id}", Long.MAX_VALUE))
+        restEmergenciaMockMvc.perform(get("/rest/emergencias/{id}", Long.MAX_VALUE))
             .andExpect(status().isNotFound());
     }
 
@@ -232,7 +232,7 @@ public class EmergenciaResourceIntTest {
             .longitud(UPDATED_LONGITUD);
         EmergenciaDTO emergenciaDTO = emergenciaMapper.toDto(updatedEmergencia);
 
-        restEmergenciaMockMvc.perform(put("/api/emergencias")
+        restEmergenciaMockMvc.perform(put("/rest/emergencias")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(emergenciaDTO)))
             .andExpect(status().isOk());
@@ -259,7 +259,7 @@ public class EmergenciaResourceIntTest {
         EmergenciaDTO emergenciaDTO = emergenciaMapper.toDto(emergencia);
 
         // If the entity doesn't have an ID, it will be created instead of just being updated
-        restEmergenciaMockMvc.perform(put("/api/emergencias")
+        restEmergenciaMockMvc.perform(put("/rest/emergencias")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
             .content(TestUtil.convertObjectToJsonBytes(emergenciaDTO)))
             .andExpect(status().isCreated());
@@ -277,7 +277,7 @@ public class EmergenciaResourceIntTest {
         int databaseSizeBeforeDelete = emergenciaRepository.findAll().size();
 
         // Get the emergencia
-        restEmergenciaMockMvc.perform(delete("/api/emergencias/{id}", emergencia.getId())
+        restEmergenciaMockMvc.perform(delete("/rest/emergencias/{id}", emergencia.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());
 
