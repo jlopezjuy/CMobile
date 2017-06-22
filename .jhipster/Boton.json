@@ -1,0 +1,35 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "ciudadano",
+            "otherEntityName": "ciudadano",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "telefonoMovil",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "codigoBoton",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "latitud",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "longitud",
+            "fieldType": "BigDecimal"
+        }
+    ],
+    "changelogDate": "20170621201130",
+    "entityTableName": "boton",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "microservice": "cadgateway"
+}

@@ -1,0 +1,44 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "ciudadano",
+            "otherEntityName": "ciudadano",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "telefonoMovil",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "idCorporacion",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "idSubtipoEmergencia",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "imagen",
+            "fieldType": "byte[]",
+            "fieldTypeBlobContent": "any"
+        },
+        {
+            "fieldName": "latitud",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "longitud",
+            "fieldType": "BigDecimal"
+        }
+    ],
+    "changelogDate": "20170621201129",
+    "entityTableName": "emergencia",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "microservice": "cadgateway"
+}

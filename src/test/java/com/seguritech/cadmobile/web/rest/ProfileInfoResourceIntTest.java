@@ -1,7 +1,7 @@
 package com.seguritech.cadmobile.web.rest;
 
 import io.github.jhipster.config.JHipsterProperties;
-import com.seguritech.cadmobile.CadmobileApp;
+import com.seguritech.cadmobile.CadgatewayApp;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @see ProfileInfoResource
  **/
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = CadmobileApp.class)
+@SpringBootTest(classes = CadgatewayApp.class)
 public class ProfileInfoResourceIntTest {
 
     @Mock
@@ -56,7 +56,7 @@ public class ProfileInfoResourceIntTest {
 
     @Test
     public void getProfileInfoWithRibbon() throws Exception {
-        restProfileMockMvc.perform(get("/api/profile-info"))
+        restProfileMockMvc.perform(get("/rest/profile-info"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
     }
@@ -67,7 +67,7 @@ public class ProfileInfoResourceIntTest {
         ribbon.setDisplayOnActiveProfiles(null);
         when(jHipsterProperties.getRibbon()).thenReturn(ribbon);
 
-        restProfileMockMvc.perform(get("/api/profile-info"))
+        restProfileMockMvc.perform(get("/rest/profile-info"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
     }
@@ -78,7 +78,7 @@ public class ProfileInfoResourceIntTest {
         when(environment.getDefaultProfiles()).thenReturn(emptyProfile);
         when(environment.getActiveProfiles()).thenReturn(emptyProfile);
 
-        restProfileMockMvc.perform(get("/api/profile-info"))
+        restProfileMockMvc.perform(get("/rest/profile-info"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE));
     }

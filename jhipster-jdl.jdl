@@ -1,0 +1,53 @@
+entity Ciudadano{
+   nombre String,
+   paterno String,
+   materno String,
+   email String,
+   fechaNacimiento LocalDate,
+   telefonoMovil  String,
+   telefonoFijo String,
+   calle String,
+   numero String,
+   colonia String,
+   municipio String,
+   cp String,
+   genero String,
+   tipoSanguineo String,
+   alergias String,
+   padecimientos String,
+   latitud BigDecimal,
+   longitud BigDecimal,
+   codigoVerfificacion String,
+   estado Boolean
+}
+
+entity Emergencia{
+   telefonoMovil String,
+   idCorporacion String,
+   idSubtipoEmergencia String,
+   imagen Blob,
+   latitud BigDecimal,
+   longitud BigDecimal
+}
+
+entity Boton{
+   telefonoMovil String,
+   codigoBoton String,
+   latitud BigDecimal,
+   longitud BigDecimal
+}
+
+relationship OneToMany{
+	Ciudadano{boton} to Boton{ciudadano},
+    Ciudadano{emeprgencia} to Emergencia{ciudadano}
+}
+
+paginate Ciudadano with pagination
+
+dto * with mapstruct
+
+service all with serviceImpl
+
+
+
+//mvn install:install-file -Dfile=/home/mostro/ojdbc8.jar -DgroupId=com.oracle -DartifactId=ojdbc8 -Dversion=12.2.0.1 -Dpackaging=jar

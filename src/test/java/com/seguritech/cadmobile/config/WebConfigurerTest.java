@@ -13,7 +13,6 @@ import com.hazelcast.ringbuffer.Ringbuffer;
 import com.hazelcast.transaction.*;
 import io.github.jhipster.config.JHipsterConstants;
 import io.github.jhipster.config.JHipsterProperties;
-import io.github.jhipster.web.filter.CachingHttpHeadersFilter;
 import io.undertow.Undertow;
 import io.undertow.Undertow.Builder;
 import io.undertow.UndertowOptions;
@@ -86,7 +85,6 @@ public class WebConfigurerTest {
         assertThat(servletContext.getAttribute(MetricsServlet.METRICS_REGISTRY)).isEqualTo(metricRegistry);
         verify(servletContext).addFilter(eq("webappMetricsFilter"), any(InstrumentedFilter.class));
         verify(servletContext).addServlet(eq("metricsServlet"), any(MetricsServlet.class));
-        verify(servletContext).addFilter(eq("cachingHttpHeadersFilter"), any(CachingHttpHeadersFilter.class));
         verify(servletContext, never()).addServlet(eq("H2Console"), any(WebServlet.class));
     }
 
@@ -99,7 +97,6 @@ public class WebConfigurerTest {
         assertThat(servletContext.getAttribute(MetricsServlet.METRICS_REGISTRY)).isEqualTo(metricRegistry);
         verify(servletContext).addFilter(eq("webappMetricsFilter"), any(InstrumentedFilter.class));
         verify(servletContext).addServlet(eq("metricsServlet"), any(MetricsServlet.class));
-        verify(servletContext, never()).addFilter(eq("cachingHttpHeadersFilter"), any(CachingHttpHeadersFilter.class));
         verify(servletContext).addServlet(eq("H2Console"), any(WebServlet.class));
     }
 
@@ -111,9 +108,6 @@ public class WebConfigurerTest {
         assertThat(container.getMimeMappings().get("abs")).isEqualTo("audio/x-mpeg");
         assertThat(container.getMimeMappings().get("html")).isEqualTo("text/html;charset=utf-8");
         assertThat(container.getMimeMappings().get("json")).isEqualTo("text/html;charset=utf-8");
-        if (container.getDocumentRoot() != null) {
-            assertThat(container.getDocumentRoot().getPath()).isEqualTo(FilenameUtils.separatorsToSystem("target/www"));
-        }
 
         Builder builder = Undertow.builder();
         container.getBuilderCustomizers().forEach(c -> c.customize(builder));
@@ -145,7 +139,7 @@ public class WebConfigurerTest {
             .build();
 
         mockMvc.perform(
-            options("/api/test-cors")
+            options("/rest/test-cors")
                 .header(HttpHeaders.ORIGIN, "other.domain.com")
                 .header(HttpHeaders.ACCESS_CONTROL_REQUEST_METHOD, "POST"))
             .andExpect(status().isOk())
@@ -156,7 +150,7 @@ public class WebConfigurerTest {
             .andExpect(header().string(HttpHeaders.ACCESS_CONTROL_MAX_AGE, "1800"));
 
         mockMvc.perform(
-            get("/api/test-cors")
+            get("/rest/test-cors")
                 .header(HttpHeaders.ORIGIN, "other.domain.com"))
             .andExpect(status().isOk())
             .andExpect(header().string(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "other.domain.com"));
@@ -190,7 +184,7 @@ public class WebConfigurerTest {
             .build();
 
         mockMvc.perform(
-            get("/api/test-cors")
+            get("/rest/test-cors")
                 .header(HttpHeaders.ORIGIN, "other.domain.com"))
             .andExpect(status().isOk())
             .andExpect(header().doesNotExist(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN));
@@ -205,7 +199,7 @@ public class WebConfigurerTest {
             .build();
 
         mockMvc.perform(
-            get("/api/test-cors")
+            get("/rest/test-cors")
                 .header(HttpHeaders.ORIGIN, "other.domain.com"))
             .andExpect(status().isOk())
             .andExpect(header().doesNotExist(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN));

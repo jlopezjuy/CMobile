@@ -1,6 +1,6 @@
 package com.seguritech.cadmobile.web.rest;
 
-import com.seguritech.cadmobile.CadmobileApp;
+import com.seguritech.cadmobile.CadgatewayApp;
 import com.seguritech.cadmobile.web.rest.vm.LoggerVM;
 import ch.qos.logback.classic.AsyncAppender;
 import ch.qos.logback.classic.LoggerContext;
@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @see LogsResource
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = CadmobileApp.class)
+@SpringBootTest(classes = CadgatewayApp.class)
 public class LogsResourceIntTest {
 
     private MockMvc restLogsMockMvc;

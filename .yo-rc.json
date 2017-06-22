@@ -5,10 +5,10 @@
       "nativeLanguage": "es"
     },
     "jhipsterVersion": "4.5.4",
-    "baseName": "cadmobile",
+    "baseName": "cadgateway",
     "packageName": "com.seguritech.cadmobile",
     "packageFolder": "com/seguritech/cadmobile",
-    "serverPort": "8080",
+    "serverPort": "8081",
     "authenticationType": "jwt",
     "hibernateCache": "hazelcast",
     "clusteredHttpSession": false,
@@ -18,20 +18,22 @@
     "prodDatabaseType": "oracle",
     "searchEngine": false,
     "messageBroker": false,
-    "serviceDiscoveryType": false,
+    "serviceDiscoveryType": "eureka",
     "buildTool": "maven",
     "enableSocialSignIn": false,
-    "jwtSecretKey": "4d561f42ff1c42ff97905442352bdd7fda9254da",
-    "clientFramework": "angular2",
-    "useSass": true,
-    "clientPackageManager": "yarn",
-    "applicationType": "gateway",
-    "testFrameworks": [],
-    "jhiPrefix": "jhi",
+    "jwtSecretKey": "91c5f31d5705b964700cff9f97985aac13b71fd5",
     "enableTranslation": true,
+    "applicationType": "microservice",
+    "testFrameworks": [
+      "gatling"
+    ],
+    "jhiPrefix": "jhi",
+    "skipClient": true,
+    "skipUserManagement": true,
     "nativeLanguage": "es",
     "languages": [
       "es"
-    ]
+    ],
+    "clientPackageManager": "yarn"
   }
 }
