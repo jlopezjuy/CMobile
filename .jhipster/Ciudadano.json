@@ -1,0 +1,105 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "boton",
+            "otherEntityName": "boton",
+            "otherEntityRelationshipName": "ciudadano"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "emeprgencia",
+            "otherEntityName": "emergencia",
+            "otherEntityRelationshipName": "ciudadano"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "nombre",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "paterno",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "materno",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "email",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "fechaNacimiento",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "telefonoMovil",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "telefonoFijo",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "calle",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "numero",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "colonia",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "municipio",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "cp",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "genero",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "tipoSanguineo",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "alergias",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "padecimientos",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "latitud",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "longitud",
+            "fieldType": "BigDecimal"
+        },
+        {
+            "fieldName": "codigoVerfificacion",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "estado",
+            "fieldType": "Boolean"
+        }
+    ],
+    "changelogDate": "20170621201128",
+    "entityTableName": "ciudadano",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceImpl",
+    "microservice": "cadgateway"
+}

@@ -1,6 +1,6 @@
 package com.seguritech.cadmobile.web.rest.errors;
 
-import com.seguritech.cadmobile.CadmobileApp;
+import com.seguritech.cadmobile.CadgatewayApp;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @see ExceptionTranslator
  */
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = CadmobileApp.class)
+@SpringBootTest(classes = CadgatewayApp.class)
 public class ExceptionTranslatorIntTest {
 
     @Autowired

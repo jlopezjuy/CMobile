@@ -1,10 +1,16 @@
 version: '2'
 services:
-    cadmobile-app:
-        image: cadmobile
+    cadgateway-app:
+        image: cadgateway
         environment:
             - SPRING_PROFILES_ACTIVE=prod,swagger
-            - SPRING_DATASOURCE_URL=jdbc:oracle:thin:@cadmobile-oracle:1521:cadmobile
-            - JHIPSTER_SLEEP=10 # gives time for the database to boot before the application
-        ports:
-            - 8080:8080
+            - EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/eureka
+            - SPRING_CLOUD_CONFIG_URI=http://admin:$${jhipster.registry.password}@jhipster-registry:8761/config
+            - SPRING_DATASOURCE_URL=jdbc:oracle:thin:@cadgateway-oracle:1521:cadgateway
+            - JHIPSTER_SLEEP=30 # gives time for the JHipster Registry to boot before the application
+    jhipster-registry:
+        extends:
+            file: jhipster-registry.yml
+            service: jhipster-registry
+        environment:
+            - SPRING_CLOUD_CONFIG_SERVER_NATIVE_SEARCH_LOCATIONS=file:./central-config/docker-config/

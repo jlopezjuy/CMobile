@@ -10,15 +10,15 @@ public final class HeaderUtil {
 
     private static final Logger log = LoggerFactory.getLogger(HeaderUtil.class);
 
-    private static final String APPLICATION_NAME = "cadmobileApp";
+    private static final String APPLICATION_NAME = "cadgatewayApp";
 
     private HeaderUtil() {
     }
 
     public static HttpHeaders createAlert(String message, String param) {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("X-cadmobileApp-alert", message);
-        headers.add("X-cadmobileApp-params", param);
+        headers.add("X-cadgatewayApp-alert", message);
+        headers.add("X-cadgatewayApp-params", param);
         return headers;
     }
 
@@ -37,8 +37,8 @@ public final class HeaderUtil {
     public static HttpHeaders createFailureAlert(String entityName, String errorKey, String defaultMessage) {
         log.error("Entity processing failed, {}", defaultMessage);
         HttpHeaders headers = new HttpHeaders();
-        headers.add("X-cadmobileApp-error", "error." + errorKey);
-        headers.add("X-cadmobileApp-params", entityName);
+        headers.add("X-cadgatewayApp-error", "error." + errorKey);
+        headers.add("X-cadgatewayApp-params", entityName);
         return headers;
     }
 }

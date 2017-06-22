@@ -1,0 +1,117 @@
+package com.seguritech.cadmobile.web.rest;
+
+import com.codahale.metrics.annotation.Timed;
+import com.seguritech.cadmobile.service.BotonService;
+import com.seguritech.cadmobile.web.rest.util.HeaderUtil;
+import com.seguritech.cadmobile.service.dto.BotonDTO;
+import io.github.jhipster.web.util.ResponseUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import java.util.List;
+import java.util.Optional;
+
+/**
+ * REST controller for managing Boton.
+ */
+@RestController
+@RequestMapping("/api")
+public class BotonResource {
+
+    private final Logger log = LoggerFactory.getLogger(BotonResource.class);
+
+    private static final String ENTITY_NAME = "boton";
+
+    private final BotonService botonService;
+
+    public BotonResource(BotonService botonService) {
+        this.botonService = botonService;
+    }
+
+    /**
+     * POST  /botons : Create a new boton.
+     *
+     * @param botonDTO the botonDTO to create
+     * @return the ResponseEntity with status 201 (Created) and with body the new botonDTO, or with status 400 (Bad Request) if the boton has already an ID
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PostMapping("/botons")
+    @Timed
+    public ResponseEntity<BotonDTO> createBoton(@RequestBody BotonDTO botonDTO) throws URISyntaxException {
+        log.debug("REST request to save Boton : {}", botonDTO);
+        if (botonDTO.getId() != null) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new boton cannot already have an ID")).body(null);
+        }
+        BotonDTO result = botonService.save(botonDTO);
+        return ResponseEntity.created(new URI("/api/botons/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * PUT  /botons : Updates an existing boton.
+     *
+     * @param botonDTO the botonDTO to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated botonDTO,
+     * or with status 400 (Bad Request) if the botonDTO is not valid,
+     * or with status 500 (Internal Server Error) if the botonDTO couldn't be updated
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PutMapping("/botons")
+    @Timed
+    public ResponseEntity<BotonDTO> updateBoton(@RequestBody BotonDTO botonDTO) throws URISyntaxException {
+        log.debug("REST request to update Boton : {}", botonDTO);
+        if (botonDTO.getId() == null) {
+            return createBoton(botonDTO);
+        }
+        BotonDTO result = botonService.save(botonDTO);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, botonDTO.getId().toString()))
+            .body(result);
+    }
+
+    /**
+     * GET  /botons : get all the botons.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of botons in body
+     */
+    @GetMapping("/botons")
+    @Timed
+    public List<BotonDTO> getAllBotons() {
+        log.debug("REST request to get all Botons");
+        return botonService.findAll();
+    }
+
+    /**
+     * GET  /botons/:id : get the "id" boton.
+     *
+     * @param id the id of the botonDTO to retrieve
+     * @return the ResponseEntity with status 200 (OK) and with body the botonDTO, or with status 404 (Not Found)
+     */
+    @GetMapping("/botons/{id}")
+    @Timed
+    public ResponseEntity<BotonDTO> getBoton(@PathVariable Long id) {
+        log.debug("REST request to get Boton : {}", id);
+        BotonDTO botonDTO = botonService.findOne(id);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(botonDTO));
+    }
+
+    /**
+     * DELETE  /botons/:id : delete the "id" boton.
+     *
+     * @param id the id of the botonDTO to delete
+     * @return the ResponseEntity with status 200 (OK)
+     */
+    @DeleteMapping("/botons/{id}")
+    @Timed
+    public ResponseEntity<Void> deleteBoton(@PathVariable Long id) {
+        log.debug("REST request to delete Boton : {}", id);
+        botonService.delete(id);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+}
