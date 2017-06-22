@@ -65,7 +65,7 @@ public class CiudadanoResource {
             }
             CiudadanoDTO result = ciudadanoService.save(ciudadanoDTO);
             CiudadanoRegistroDTO ciudadano = new CiudadanoRegistroDTO(Long.valueOf(0),"Se registro correctamente el ciudadano", result.getId());
-            return new ResponseEntity<CiudadanoRegistroDTO>(ciudadano, HttpStatus.OK);
+            return new ResponseEntity<CiudadanoRegistroDTO>(ciudadano, HttpStatus.CREATED);
         }catch (Exception e){
             return new ResponseEntity<CiudadanoRegistroDTO>(new CiudadanoRegistroDTO(), HttpStatus.BAD_REQUEST);
         }

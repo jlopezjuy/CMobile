@@ -52,7 +52,7 @@ public class BotonResource {
         }
         BotonDTO result = botonService.save(botonDTO);
         ReturnStatusDTO returnStatus = new ReturnStatusDTO(Constant.CODIGO_0, Constant.CODIGO_0_MESSAGE);
-        return new ResponseEntity<ReturnStatusDTO>(returnStatus, HttpStatus.OK);
+        return new ResponseEntity<ReturnStatusDTO>(returnStatus, HttpStatus.CREATED);
     }
 
 

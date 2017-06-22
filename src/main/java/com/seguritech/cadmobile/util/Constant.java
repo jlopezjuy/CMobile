@@ -15,4 +15,6 @@ public class Constant {
     public static final String CODIGO_2_MESSAGE = "Codigo ya ha sido validado";
     public static final String CODIGO_3_MESSAGE = "Codigo ya ha caducado";
     public static final String CODIGO_99_MESSAGE = "Error en la peticion";
+
+    public static final String CODIGO_0_MESSAGE_EMERGENCIA = "Se registro correctamente la emergencia medica, en brevé se comunicaran contigo para realizar la atención";
 }
