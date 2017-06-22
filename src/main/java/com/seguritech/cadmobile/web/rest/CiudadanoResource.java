@@ -17,6 +17,7 @@ import java.net.URISyntaxException;
 
 /**
  * REST controller for managing Ciudadano.
+ * @author jlopez
  */
 @RestController
 @RequestMapping("/rest")

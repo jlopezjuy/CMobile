@@ -21,6 +21,7 @@ import java.util.Optional;
 
 /**
  * REST controller for managing Boton.
+ * @author jlopez
  */
 @RestController
 @RequestMapping("/rest")

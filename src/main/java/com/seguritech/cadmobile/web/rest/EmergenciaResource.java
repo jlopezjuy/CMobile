@@ -21,6 +21,7 @@ import java.util.Optional;
 
 /**
  * REST controller for managing Emergencia.
+ * @author jlopez
  */
 @RestController
 @RequestMapping("/rest")
