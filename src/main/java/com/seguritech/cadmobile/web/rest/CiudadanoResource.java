@@ -3,27 +3,17 @@ package com.seguritech.cadmobile.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.seguritech.cadmobile.service.dto.CiudadanoRegistroDTO;
 import com.seguritech.cadmobile.service.CiudadanoService;
-import com.seguritech.cadmobile.service.dto.VerificacionDTO;
+import com.seguritech.cadmobile.service.dto.ReturnStatusDTO;
 import com.seguritech.cadmobile.util.Constant;
 import com.seguritech.cadmobile.web.rest.util.HeaderUtil;
-import com.seguritech.cadmobile.web.rest.util.PaginationUtil;
 import com.seguritech.cadmobile.service.dto.CiudadanoDTO;
-import io.swagger.annotations.ApiParam;
-import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.net.URISyntaxException;
-
-import java.util.List;
-import java.util.Optional;
 
 /**
  * REST controller for managing Ciudadano.
@@ -51,11 +41,11 @@ public class CiudadanoResource {
      */
     @GetMapping("/dispositivo/movil/ciudadano/verificar")
     @Timed
-    public ResponseEntity<VerificacionDTO> verificarRegistro(@RequestParam String telefonoMovil, @RequestParam String codigoVerfificacion) {
+    public ResponseEntity<ReturnStatusDTO> verificarRegistro(@RequestParam String telefonoMovil, @RequestParam String codigoVerfificacion) {
         log.debug("REST request to get a page of Ciudadanos");
         CiudadanoDTO page = ciudadanoService.verificarReg(telefonoMovil, codigoVerfificacion);
-        VerificacionDTO verificacion = new VerificacionDTO(Constant.CODIGO_0, Constant.CODIGO_0_MESSAGE);
-        return new ResponseEntity<VerificacionDTO>(verificacion, HttpStatus.OK);
+        ReturnStatusDTO verificacion = new ReturnStatusDTO(Constant.CODIGO_0, Constant.CODIGO_0_MESSAGE);
+        return new ResponseEntity<ReturnStatusDTO>(verificacion, HttpStatus.OK);
     }
 
     /**

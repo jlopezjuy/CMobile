@@ -3,14 +3,14 @@ package com.seguritech.cadmobile.service.dto;
 /**
  * @author jlopez
  */
-public class VerificacionDTO {
+public class ReturnStatusDTO {
     private String codigo;
     private String mensaje;
 
-    public VerificacionDTO() {
+    public ReturnStatusDTO() {
     }
 
-    public VerificacionDTO(String codigo, String mensaje) {
+    public ReturnStatusDTO(String codigo, String mensaje) {
         this.codigo = codigo;
         this.mensaje = mensaje;
     }
