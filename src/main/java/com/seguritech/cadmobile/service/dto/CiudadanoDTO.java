@@ -1,6 +1,9 @@
 package com.seguritech.cadmobile.service.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -22,7 +25,7 @@ public class CiudadanoDTO implements Serializable {
     private String materno;
 
     private String email;
-
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate fechaNacimiento;
 
     private String telefonoMovil;
