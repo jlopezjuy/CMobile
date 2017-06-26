@@ -34,7 +34,7 @@
             </column>
 
             <column name="email" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints unique="true" nullable="true" />
             </column>
 
             <column name="fecha_nacimiento" type="date">
@@ -42,7 +42,7 @@
             </column>
 
             <column name="telefono_movil" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints unique="true" nullable="true" />
             </column>
 
             <column name="telefono_fijo" type="varchar(255)">

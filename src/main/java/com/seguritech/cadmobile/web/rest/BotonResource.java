@@ -51,6 +51,9 @@ public class BotonResource {
         if (botonDTO.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "idexists", "A new boton cannot already have an ID")).body(null);
         }
+        if(!botonService.validateCiudadano(botonDTO.getTelefonoMovil())){
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert(ENTITY_NAME, "Telefono Movil", "No tiene registrado el numero de Telefono Movil")).body(null);
+        }
         BotonDTO result = botonService.save(botonDTO);
         ReturnStatusDTO returnStatus = new ReturnStatusDTO(Constant.CODIGO_0, Constant.CODIGO_0_MESSAGE);
         return new ResponseEntity<ReturnStatusDTO>(returnStatus, HttpStatus.CREATED);

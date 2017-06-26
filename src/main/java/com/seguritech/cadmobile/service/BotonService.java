@@ -37,4 +37,11 @@ public interface BotonService {
      *  @param id the id of the entity
      */
     void delete(Long id);
+
+    /**
+     *
+     * @param telefonoMovil
+     * @return
+     */
+    Boolean validateCiudadano(String telefonoMovil);
 }

@@ -36,10 +36,10 @@ public class Ciudadano implements Serializable {
     @Column(name = "materno")
     private String materno;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
-    @Column(name = "fecha_nacimiento")
+    @Column(name = "fecha_nacimiento", unique = true)
     private LocalDate fechaNacimiento;
 
     @Column(name = "telefono_movil")

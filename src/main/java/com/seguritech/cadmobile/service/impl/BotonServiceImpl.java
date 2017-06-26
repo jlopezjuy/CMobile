@@ -1,5 +1,7 @@
 package com.seguritech.cadmobile.service.impl;
 
+import com.seguritech.cadmobile.domain.Ciudadano;
+import com.seguritech.cadmobile.repository.CiudadanoRepository;
 import com.seguritech.cadmobile.service.BotonService;
 import com.seguritech.cadmobile.domain.Boton;
 import com.seguritech.cadmobile.repository.BotonRepository;
@@ -24,12 +26,16 @@ public class BotonServiceImpl implements BotonService{
     private final Logger log = LoggerFactory.getLogger(BotonServiceImpl.class);
 
     private final BotonRepository botonRepository;
+    private final CiudadanoRepository ciudadanoRepository;
 
     private final BotonMapper botonMapper;
 
-    public BotonServiceImpl(BotonRepository botonRepository, BotonMapper botonMapper) {
+    private Ciudadano ciudadano;
+
+    public BotonServiceImpl(BotonRepository botonRepository, BotonMapper botonMapper, CiudadanoRepository ciudadanoRepository) {
         this.botonRepository = botonRepository;
         this.botonMapper = botonMapper;
+        this.ciudadanoRepository = ciudadanoRepository;
     }
 
     /**
@@ -41,6 +47,7 @@ public class BotonServiceImpl implements BotonService{
     @Override
     public BotonDTO save(BotonDTO botonDTO) {
         log.debug("Request to save Boton : {}", botonDTO);
+        botonDTO.setCiudadanoId(this.ciudadano.getId());
         Boton boton = botonMapper.toEntity(botonDTO);
         boton = botonRepository.save(boton);
         return botonMapper.toDto(boton);
@@ -83,5 +90,16 @@ public class BotonServiceImpl implements BotonService{
     public void delete(Long id) {
         log.debug("Request to delete Boton : {}", id);
         botonRepository.delete(id);
+    }
+
+    /**
+     * Method to validate ciudadano
+     * @param telefonoMovil
+     * @return
+     */
+    @Override
+    public Boolean validateCiudadano(String telefonoMovil) {
+        this.ciudadano = ciudadanoRepository.findByTelefonoMovil(telefonoMovil);
+        return (null != this.ciudadano);
     }
 }
